@@ -1,11 +1,5 @@
-import ReactDOM from 'react-dom';
-import React, { useState, useEffect }  from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import React  from 'react';
+import {Link} from "react-router-dom";
 
 export function Header() {
   return (
@@ -27,6 +21,26 @@ export function Footer() {
 	    <Link to={"/information"}>Mehr Information</Link>
 	    <div id="footerMidText"><span>Hüwe Workers Application - 2020</span></div>
     </footer>
+  )
+}
+
+export function Navigation(props) {
+
+  function handleClick() {
+    fetch('http://localhost/backend/logout.php', {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include'
+    })
+    .then(response => response.json())
+    .then((data) => props.setLogin(data.isLoggedIn));
+  }
+
+  return (
+    <div id="settings">
+	    <button className="emoji" onClick={handleClick} title="Ausloggen">🏃 <span>Ausloggen</span></button>
+	    <Link className="emoji" to={"/Settings"} title="Einstellungen">⚙ <span>Einstellungen</span></Link>
+    </div>
   )
 }
 
